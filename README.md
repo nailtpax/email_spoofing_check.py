@@ -40,7 +40,7 @@ Este script foi desenvolvido para auxiliar Pentesters e Analistas de Segurança 
 
 ```bash
 # Clone o repositório
-git clone [https://github.com/nailtpax/email_spoofing_check.py.git](https://github.com/nailtpax/email_spoofing_check.py.git)
+git clone https://github.com/nailtpax/email_spoofing_check.py.git
 cd email_spoofing_check.py
 
 # Instale as dependências
