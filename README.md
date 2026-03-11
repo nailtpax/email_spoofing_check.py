@@ -1,48 +1,50 @@
-# Email Spoofing Validation Tool
+# 🛡️ Email Spoofing Check
+**Ferramenta de validação automatizada de políticas de autenticação de e-mail (SPF e DMARC).**
 
-Ferramenta para **validação automatizada de possíveis vulnerabilidades de Email Spoofing** em um domínio informado, destinada ao uso em **pentests autorizados e avaliações de postura de segurança**.
+[![Python Version](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
-O script realiza análise técnica dos principais mecanismos de autenticação de e-mail utilizados para mitigar spoofing e phishing, sem realizar envio real de mensagens.
-
----
-
-## Funcionalidades
-
-- Consulta e análise de registros DNS:
-  - **SPF (TXT)**
-  - **DMARC (`_dmarc.dominio`)**
-  - **DKIM** (detecção básica por selectors comuns)
-- Verificação de:
-  - Existência ou ausência de SPF
-  - Política final do SPF (`~all`, `-all`, `+all` ou ausente)
-  - Existência ou ausência de DMARC
-  - Política DMARC (`none`, `quarantine`, `reject`)
-- Identificação de **configurações permissivas ou ausentes** que possibilitam Email Spoofing
-- Classificação simples de risco:
-  - **Baixo**
-  - **Médio**
-  - **Alto**
-- Output estruturado e legível para uso em relatórios
-- Tratamento de erros DNS (NXDOMAIN, timeout, ausência de registros)
+Este script foi desenvolvido para auxiliar Pentesters e Analistas de Segurança na identificação de configurações falhas em registros DNS que permitem o forjamento de e-mails (**Email Spoofing**). A ferramenta realiza uma análise técnica passiva, sem o envio real de mensagens, tornando-a segura para ambientes de produção.
 
 ---
 
-## O que a ferramenta **não faz**
+## 🚀 Funcionalidades
 
-- ❌ Não envia e-mails reais
-- ❌ Não executa ataques
-- ❌ Não realiza exploração ativa
-
-A ferramenta realiza **apenas validação técnica e passiva**, sendo segura para ambientes de teste autorizados.
+* **🔍 Scan de Registros DNS:** Identifica e extrai registros SPF (TXT) e DMARC (`_dmarc`).
+* **⚖️ Análise de Qualificadores:** Avalia o impacto de políticas como `~all` (SoftFail), `-all` (Fail) e `+all` (Any).
+* **🛡️ Verificação DMARC:** Checa a existência e o rigor das políticas de `none`, `quarantine` ou `reject`.
+* **📊 Classificação de Risco:** Gera um veredito automático (Baixo, Médio ou Alto) baseado na postura de segurança do domínio.
+* **📄 Output Estruturado:** Resultados formatados para fácil leitura e inclusão em relatórios técnicos de Pentest.
 
 ---
 
-## Requisitos
+## 🛠️ O que a ferramenta analisa?
 
-- Python **3.8+**
-- Biblioteca `dnspython`
+| Registro | Foco da Análise | Impacto se Falho |
+| :--- | :--- | :--- |
+| **SPF** | Qualificadores de autorização (`all`). | Permite que IPs não autorizados enviem e-mails pelo domínio. |
+| **DMARC** | Instrução para o servidor receptor em caso de falha. | Sem DMARC, as falhas de SPF/DKIM podem ser ignoradas. |
 
-Instalação da dependência:
+> [!IMPORTANT]
+> **Segurança e Ética:** A ferramenta utiliza exclusivamente consultas DNS. Ela **NÃO** realiza interação ativa com servidores SMTP e **NÃO** envia e-mails reais.
+
+---
+
+## 💻 Instalação e Uso
+
+### Pré-requisitos
+* Python 3.8 ou superior.
+* Biblioteca `dnspython`.
+
+### Instalação
 
 ```bash
+# Clone o repositório
+git clone [https://github.com/nailtpax/email_spoofing_check.py.git](https://github.com/nailtpax/email_spoofing_check.py.git)
+cd email_spoofing_check.py
+
+# Instale as dependências
 pip install dnspython
+```
+
+Script desenvolvido por nailtpax
